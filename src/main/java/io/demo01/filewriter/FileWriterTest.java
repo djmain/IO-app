@@ -1,16 +1,13 @@
 package io.demo01.filewriter;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-import javax.net.ssl.StandardConstants;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
-import java.util.Set;
 
 /**
  * created by Jay on 2019/7/28
@@ -51,11 +48,22 @@ public class FileWriterTest
         System.out.println(System.getProperty("sun.jnu.encoding"));
         // java文件编码 UTF-8, 不是class文件的编码, 所有的class文件都是UTF-8编码格式
         System.out.println(System.getProperty("file.encoding"));
-        // JVM默认字符集UTF-8
+        // JVM默认字符集UTF-8， 一般情况下, 默认字符集等于file.encoding
         System.out.println(Charset.defaultCharset());
-        new String("a");
     }
 
+
+    @Test
+    public void testReadFromFile() throws Exception
+    {
+        // JVM字符集为UTF-8
+        System.out.println("file.encoding:" + System.getProperty("file.encoding"));
+        System.out.println("DefaultCharset:" + Charset.defaultCharset());
+        File file = new File("D:\\temp.txt");
+        byte[] data = FileUtils.readFileToByteArray(file);
+        // 如果temp.txt编码格式为UTF-8, 可以用以下代码; 如果编码格式为GBK, 则需要 System.out.println(new String(data, "GBK"));
+        System.out.println(new String(data));
+    }
 
 
 }
